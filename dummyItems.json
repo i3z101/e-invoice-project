@@ -1,0 +1,67 @@
+[
+    {
+        "item": "Nike shoes",
+        "qnty": 1,
+        "pricePerUnit": 490 
+    },
+    {
+        "item": "Adidas T-shirt",
+        "qnty": 4,
+        "pricePerUnit": 80 
+    },
+    {
+        "item": "Canva hoodie",
+        "qnty": 2,
+        "pricePerUnit": 79 
+    },
+    {
+        "item": "Puma Man City shirt",
+        "qnty": 1,
+        "pricePerUnit": 320 
+    },
+    {
+        "item": "Adidas classic shoes",
+        "qnty": 1,
+        "pricePerUnit": 250 
+    },
+    {
+        "item": "Puma hat",
+        "qnty": 3,
+        "pricePerUnit": 35 
+    },
+    {
+        "item": "Alhilal shirt",
+        "qnty": 1,
+        "pricePerUnit": 360 
+    },
+    {
+        "item": "Alhilal shirt",
+        "qnty": 1,
+        "pricePerUnit": 360 
+    },
+    {
+        "item": "Alhilal shirt",
+        "qnty": 1,
+        "pricePerUnit": 360 
+    },
+    {
+        "item": "Alhilal shirt",
+        "qnty": 1,
+        "pricePerUnit": 360 
+    },
+    {
+        "item": "Alhilal shirt",
+        "qnty": 1,
+        "pricePerUnit": 360 
+    },
+    {
+        "item": "Puma Man City shirt",
+        "qnty": 1,
+        "pricePerUnit": 320 
+    },
+    {
+        "item": "Adidas classic shoes",
+        "qnty": 1,
+        "pricePerUnit": 250 
+    }
+]
