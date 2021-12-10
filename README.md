@@ -36,6 +36,8 @@ npm run dev
 npm start
 ```
 
+## YOU SHOULD REFERE TO SRC FOLDER TO CONTINUE DEVELOPMENT
+
 For production environments...
 
 ```sh
