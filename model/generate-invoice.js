@@ -126,7 +126,7 @@ class Invoice {
             this.generateText(15, this.REGULAR, "Total:", 50, 450);
             this.generateText(16, this.BOLD, `${this.total.toFixed(2).toString()} SR`, 90, 450);
         });
-        this.generateInvoice = (items, s3ApiVersion, s3Region, s3AccessKeyId, s3SecretAccessKey, s3BucketName) => __awaiter(this, void 0, void 0, function* () {
+        this.generateInvoice = (items, toS3 = false, s3ApiVersion, s3Region, s3AccessKeyId, s3SecretAccessKey, s3BucketName) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const FULL_FILE_PATH = `${this.FILE_PATH}${this.billNo}.pdf`;
                 let response;
@@ -138,22 +138,30 @@ class Invoice {
                 this.generateInvoiceFooter();
                 (0, svg_to_pdfkit_1.default)(this.doc, yield this.generateQRCode(), 150, 470);
                 this.doc.end();
-                const isInvoiceExist = fs_1.default.existsSync(FULL_FILE_PATH);
-                const s3Invoice = new manage_invoices_1.default(s3ApiVersion, s3Region, s3AccessKeyId, s3SecretAccessKey, s3BucketName);
-                if (isInvoiceExist) {
-                    const invoice = yield promises_1.default.readFile(FULL_FILE_PATH);
-                    response = yield s3Invoice.uploadInvoice(invoice, this.billNo);
-                    // We delete the generated invoice from our server since it is uploaded in the cloud.
-                    yield promises_1.default.unlink(this.FILE_PATH + this.billNo + '.pdf');
+                if (toS3) {
+                    if (s3ApiVersion && s3Region && s3AccessKeyId && s3SecretAccessKey && s3BucketName) {
+                        const isInvoiceExist = fs_1.default.existsSync(FULL_FILE_PATH);
+                        const s3Invoice = new manage_invoices_1.default(s3ApiVersion, s3Region, s3AccessKeyId, s3SecretAccessKey, s3BucketName);
+                        if (isInvoiceExist) {
+                            const invoice = yield promises_1.default.readFile(FULL_FILE_PATH);
+                            response = yield s3Invoice.uploadInvoice(invoice, this.billNo);
+                            // We delete the generated invoice from our server since it is uploaded in the cloud.
+                            yield promises_1.default.unlink(this.FILE_PATH + this.billNo + '.pdf');
+                        }
+                        else {
+                            response = {
+                                message: 'No file has been found',
+                                statusCode: 404
+                            };
+                            throw response;
+                        }
+                        return response;
+                    }
                 }
-                else {
-                    response = {
-                        message: 'No file has been found',
-                        statusCode: 404
-                    };
-                    throw response;
-                }
-                return response;
+                return {
+                    message: "File created successfully",
+                    statusCode: 201
+                };
             }
             catch (err) {
                 return {
