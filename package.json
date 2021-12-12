@@ -1,6 +1,6 @@
 {
   "name": "e-invoice-gen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An auto pdf generator for invoice with QR code",
   "main": "index.js",
   "bin": "index.js",
