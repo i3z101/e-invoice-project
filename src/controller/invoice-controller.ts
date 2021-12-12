@@ -72,8 +72,8 @@ export const downloadInvoice = async (req: Request, res: Response, next: NextFun
             message: "Correct",
             statusCode: 200
         }
-        // const s3Client = new S3Invoice(S3APIVERSION, S3REGION, S3ACCESSKEYID, S3SECRETACCESSKEY, S3BUCKETNAME);
-        // const downloadResponse = await s3Client.downloadInvoice(res, billNo);
+        const s3Client = new S3Invoice(S3APIVERSION, S3REGION, S3ACCESSKEYID, S3SECRETACCESSKEY, S3BUCKETNAME);
+        const downloadResponse = await s3Client.downloadInvoice(res, billNo);
         
         return res.json(respone);
     }catch(err) {
