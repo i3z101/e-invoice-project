@@ -11,9 +11,9 @@ const COMPANY_NAME: string = 'dyson'; //You should write the company name.
 const COMPANY_SLOGAN: string = 'For trading'; //You should write the company slogan.
 const S3APIVERSION: string = '2006-03-01'; //Keep it like this. DO NOT CHANGE IT.
 const S3REGION: string = 'me-south-1'; //You should write where your s3 bucket is located.
-const S3ACCESSKEYID: string = 'AKIAWVNSF3DYCJPZ6DOI'; //You should write access key id for your/company aws account. BEST TO USE IT AS ENVIRONMENT VARIABLE.
-const S3SECRETACCESSKEY: string = 'GZe8oR0kpkoBTC3myx0OfENgoEqLP5kBoSAKy1JT'; //You should write the secret access key for your/company aws account. BEST TO USE IT AS ENVIRONMENT VARIABLE.
-const S3BUCKETNAME: string = 'e-invoice-test'; //You should write the bucket name of your/company aws account. BEST TO USE IT AS ENVIRONMENT VARIABLE.
+const S3ACCESSKEYID: string = ''; //You should write access key id for your/company aws account. BEST TO USE IT AS ENVIRONMENT VARIABLE.
+const S3SECRETACCESSKEY: string = ''; //You should write the secret access key for your/company aws account. BEST TO USE IT AS ENVIRONMENT VARIABLE.
+const S3BUCKETNAME: string = ''; //You should write the bucket name of your/company aws account. BEST TO USE IT AS ENVIRONMENT VARIABLE.
 
 
 export const generateInvoice =  async (req: Request, res: Response, next: NextFunction): Promise <Response> => {
