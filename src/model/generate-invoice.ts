@@ -176,7 +176,7 @@ class Invoice {
 
     }
     
-    generateInvoice = async (items: ItemsInterface[], s3ApiVersion: string, s3Region: string, s3AccessKeyId: string, s3SecretAccessKey: string, s3BucketName: string): Promise<ResponseInterface> => {
+    generateInvoice = async (items: ItemsInterface[], toS3: boolean = false, s3ApiVersion?: string, s3Region?: string, s3AccessKeyId?: string, s3SecretAccessKey?: string, s3BucketName?: string): Promise<ResponseInterface> => {
         try {
                 const FULL_FILE_PATH: string = `${this.FILE_PATH}${this.billNo}.pdf` 
                 let response: ResponseInterface;
@@ -188,21 +188,29 @@ class Invoice {
                 this.generateInvoiceFooter();
                 SVGtoPDF(this.doc, await this.generateQRCode(), 150, 470);
                 this.doc.end();
-                const isInvoiceExist: boolean = fs.existsSync(FULL_FILE_PATH);
-                const s3Invoice = new S3Invoice(s3ApiVersion, s3Region, s3AccessKeyId, s3SecretAccessKey, s3BucketName);
-                if(isInvoiceExist) {
-                    const invoice: fsPromise.FileReadOptions['buffer'] = await fsPromise.readFile(FULL_FILE_PATH);
-                    response = await s3Invoice.uploadInvoice(invoice, this.billNo);
-                    // We delete the generated invoice from our server since it is uploaded in the cloud.
-                    await fsPromise.unlink(this.FILE_PATH + this.billNo + '.pdf')
-                }else {
-                    response = {
-                        message: 'No file has been found',
-                        statusCode: 404
+                if(toS3) {
+                    if(s3ApiVersion  && s3Region  && s3AccessKeyId && s3SecretAccessKey && s3BucketName) {
+                        const isInvoiceExist: boolean = fs.existsSync(FULL_FILE_PATH);
+                        const s3Invoice = new S3Invoice(s3ApiVersion, s3Region, s3AccessKeyId, s3SecretAccessKey, s3BucketName);
+                        if(isInvoiceExist) {
+                            const invoice: fsPromise.FileReadOptions['buffer'] = await fsPromise.readFile(FULL_FILE_PATH);
+                            response = await s3Invoice.uploadInvoice(invoice, this.billNo);
+                            // We delete the generated invoice from our server since it is uploaded in the cloud.
+                            await fsPromise.unlink(this.FILE_PATH + this.billNo + '.pdf')
+                        }else {
+                            response = {
+                                message: 'No file has been found',
+                                statusCode: 404
+                            }
+                            throw response
+                        }
+                        return response;
                     }
-                    throw response
                 }
-            return response;
+                return {
+                    message: "File created successfully",
+                    statusCode: 201
+                }
         }catch(err: any){
             return {
                 message : err.message,

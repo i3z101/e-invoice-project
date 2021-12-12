@@ -10,3 +10,5 @@ app.use('/api/v1', InvoiceRouter);
 app.listen(5000, ()=> {
     console.log("Hello from server");
 })
+
+export default app;
